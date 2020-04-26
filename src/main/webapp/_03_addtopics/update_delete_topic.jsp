@@ -18,7 +18,7 @@
 
 function confirmDelete() {
 	if (confirm("確定刪除此文章 ? ") ) {
-		document.forms[0].action="update_delete_topic.do?topicid=${mytopic_content.topicid}";
+		document.forms[0].action="update_delete_topic.do?topicid=${mytopic_content.topicid}&action=delete";
 		document.forms[0].method="POST";
 		document.forms[0].submit();
 	} else {
@@ -28,7 +28,7 @@ function confirmDelete() {
 
 function UpdateTopic() {
 	if (confirm("確定修改此文章 ? ") ) {
-		document.forms[0].action= "update_delete_topic.do?topicid=${mytopic_content.topicid}" ;
+		document.forms[0].action= "update_delete_topic.do?topicid=${mytopic_content.topicid}&action=update" ;
 		document.forms[0].method="POST";
 		document.forms[0].submit();
 	} else {

@@ -63,7 +63,7 @@ public class TopicDaoImpl_Jdbc implements Serializable, TopicDao {
 	@Override
 	public int updateTopic(TopicBean topic) {
 		int n = 0;
-		String sql = "UPDATE addtopic SET " + " title=?, categoyid=?, content=?  WHERE topicid = ?";
+		String sql = "UPDATE addtopic SET " + " title=?, categoryid=?, content=?  WHERE topicid = ?";
 		try (Connection connection = ds.getConnection(); PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setString(1, topic.getTitle());
 			ps.setInt(2, topic.getCategoryid());
@@ -108,6 +108,7 @@ public class TopicDaoImpl_Jdbc implements Serializable, TopicDao {
 			try (ResultSet rs = ps.executeQuery();) {
 				if (rs.next()) {
 					bean = new TopicBean();
+					bean.setTopicid(rs.getInt(1));
 					bean.setCategoryid(rs.getInt(2));
 					bean.setTitle(rs.getString(3));
 					bean.setContent(rs.getString(4));

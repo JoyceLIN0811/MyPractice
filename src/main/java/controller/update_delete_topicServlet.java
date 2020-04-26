@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.protobuf.Value;
+
 import dao.impl.TopicDaoImpl_Jdbc;
 import model.MemberBean;
 import model.TopicBean;
@@ -50,31 +52,31 @@ public class update_delete_topicServlet extends HttpServlet {
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String tidstr = req.getParameter("topicid");
+		String cidstr = req.getParameter("categoryid");
+		String action = req.getParameter("action");
 		
 		System.out.println(req.getParameter("topicid"));
 		System.out.println(req.getParameter("title"));
 		System.out.println(req.getParameter("content"));
+		System.out.println(req.getParameter("categoryid"));
+		System.out.println(req.getParameter("action"));
 		System.out.println(mb.getUsername());
 
 
 		int topicid = 0 ;
+		int categoryid = 0 ;
 
 		try{
 			// 進行資料型態的轉換
 			topicid = Integer.parseInt(tidstr.trim());
+			categoryid = Integer.parseInt(cidstr.trim());
 		} catch(NumberFormatException e){
 			throw new ServletException(e); 
 		}
+	
 		
-		
-		System.out.println(Integer.parseInt(tidstr.trim()));
-		System.out.println(req.getParameter("title"));
-		System.out.println(req.getParameter("content"));
-		System.out.println(mb.getUsername());
-		
-		TopicBean tbn = new TopicBean();
 		TopicDaoImpl_Jdbc tpl = new TopicDaoImpl_Jdbc();
-		
+		if(action=="delete") {
 		int n = tpl.deleteTopic(topicid);
 		if (n == 1) {
 			session.setAttribute("BookDeleteMsg", "文章(" + title + ")刪除成功");
@@ -82,29 +84,19 @@ public class update_delete_topicServlet extends HttpServlet {
 			session.setAttribute("BookDeleteMsg", "文章(" + title + ")刪除失敗");
 		}
 		resp.sendRedirect("mytopiclist");
-		return;
-	
-
+		return;}
 		
-		// cmd可能是DEL或是MOD
-//		String cmd = req.getParameter("cmd");
-//		
-//		if (cmd.equalsIgnoreCase("DEL")) {
-//			tpl.deleteTopic(topicid);
-//	        RequestDispatcher rd = req.getRequestDispatcher("/_04_topic/mytopiclist.jsp");
-//		    rd.forward(req, resp);
-//		    return;
-//
-//		} else if (cmd.equalsIgnoreCase("MOD")) {
-//			String newQtyStr = req.getParameter("newcontent");
-//			tbn.setTopicid(topicid);
-//			tbn.setCategoryid(categoryid);
-//			tbn.setTitle(title);
-//			tbn.setContent(content);
-//			tpl.updateTopic(tbn); 
-//	        RequestDispatcher rd = req.getRequestDispatcher("/_04_topic/mytopiclist.jsp");
-//		    rd.forward(req, resp);
-//		    return;
+		TopicBean tbn = new TopicBean();
+
+
+			tbn.setTopicid(topicid);
+			tbn.setCategoryid(categoryid);
+			tbn.setTitle(title);
+			tbn.setContent(content);
+			tpl.updateTopic(tbn); 
+	        RequestDispatcher rd = req.getRequestDispatcher("mytopiclist");
+		    rd.forward(req, resp);
+		    return;
 //		}
 
 		
