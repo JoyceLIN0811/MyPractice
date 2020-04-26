@@ -1,0 +1,4 @@
+kitty@gmail.com|123|kitty|女|20
+snoopy@gmail.com|123|snoopy|男|27
+mickey@gmail.com|123|mickey|男|18
+914@gmail.com|123|914|女|26

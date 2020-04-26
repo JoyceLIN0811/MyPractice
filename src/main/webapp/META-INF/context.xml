@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE xml> 
+<Context displayName="Pet Forum" docBase="midternproject"
+	path="/forum" reloadable="true">
+
+	<Resource name="jdbc/petforumDataSQLver" type="javax.sql.DataSource"
+	username="scott" password="tiger"
+	driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+	url="jdbc:sqlserver://localhost:1433;DatabaseName=midternproject"
+	maxTotal="8"
+	maxIdle="4"
+	maxWaitMillis="5000"/>
+
+</Context>
